@@ -82,10 +82,21 @@ int main()
         0.5,   1.5707963,  0,  0,
         0.85,   0,  0.7853981,  0,
         1,  1.3264163,  0.770319,   -0.6134645
-    }
+    };
     glm::mat4 EulerYM = glm::make_mat4(controlPointEulerY);
     
+    float controlPointEulerZ[16] =
+    {
+        0,  0,  0,  0,
+        0.4,   1.5707963,  0,  0,
+        0.75,   0,  0.7853981,  0,
+        1,  1.3264163,  0.770319,   -0.6134645
+    };
+    glm::mat4 EulerZM = glm::make_mat4(controlPointEulerZ);
     
+    glm::vec1 EulerCatXQ = tM * catmullRomM * EulerXM;
+    glm::vec1 EulerCatYQ = tM * catmullRomM * EulerYM;
+    glm::vec1 EulerCatZQ = tM * catmullRomM * EulerZM;
     
     
 }
