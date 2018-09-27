@@ -2,6 +2,7 @@
 #include <fstream>
 #include <math.h>
 #include <cmath>
+#include <cstring>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -20,8 +21,9 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-int main()
+int main(int argc, char ** argv)
 {
+
     ifstream myfile("teapot.off");
     if(!myfile)
     {
@@ -69,13 +71,21 @@ int main()
  
     float B_splinesData[16] =
     {
-        -1.0 / 6,   3.0 / 6,   -3.0 / 6,   1.0 / 6,
-         3.0 / 6,  -6.0 / 6,    3.0 / 6,       0.0,
-        -3.0 / 6,       0.0,    3.0 / 6,       0.0,
-         1.0 / 6,   4.0 / 6,    1.0 / 6,       0.0
+        
+        -1.0 / 6,    3.0 / 6,    -3.0 / 6,   1.0 / 6,
+        3.0 / 6,    -6.0 / 6,         0.0,   4.0 / 6,
+        -3.0 / 6,    3.0 / 6,    3.0 / 6,    1.0 / 6,
+        1.0 / 6,         0.0,        0.0,        0.0
     };
     glm::mat4 B_SplinesM = glm::make_mat4(B_splinesData);
     
+    glm::mat4 BlendingM;
+    
+    if(strcmp(argv[1], "C") == 0) {
+        BlendingM = catmullRomM;
+    }else{
+        BlendingM = B_SplinesM;
+    }
    
     float time1 = glfwGetTime();
     float t = fmod(time1, 1);
@@ -84,11 +94,11 @@ int main()
     glm::vec4 tM = glm::make_vec4(tData);
     
     float controlPointEulerX[4] =
-    {-0.5, -0.4, 0.5, 0.75};
+    {   -1, -0.8, 0.8, 1};
     
     float controlPointEulerY[16] =
     {
-        -0.5, -0.4, 0.5, 0.75
+         0, 1, -1, 0
     };
     float controlPointEulerZ[16] =
     {
@@ -115,17 +125,17 @@ int main()
     glm::vec4 EulerPitch = glm::make_vec4(controlPointEulerPitch);
     glm::vec4 EulerRoll = glm::make_vec4(controlPointEulerRoll);
     
-    glm::vec4 EulerCatX = tM * catmullRomM * EulerX;
+    glm::vec4 EulerCatX = tM * BlendingM * EulerX;
     float ECX = EulerCatX[0] + EulerCatX[1] + EulerCatX[2] + EulerCatX[3];
-    glm::vec4 EulerCatY = tM * catmullRomM * EulerY;
+    glm::vec4 EulerCatY = tM * BlendingM * EulerY;
     float ECY = EulerCatY[0] + EulerCatY[1] + EulerCatY[2] + EulerCatY[3];
-    glm::vec4 EulerCatZ = tM * catmullRomM * EulerZ;
+    glm::vec4 EulerCatZ = tM * BlendingM * EulerZ;
     float ECZ = EulerCatZ[0] + EulerCatZ[1] + EulerCatZ[2] + EulerCatZ[3];
-    glm::vec1 EulerCatYaw = tM * catmullRomM * EulerYaw;
+    glm::vec1 EulerCatYaw = tM * BlendingM * EulerYaw;
     float ECYaw = EulerCatYaw[0] + EulerCatYaw[1] + EulerCatYaw[2] + EulerCatYaw[3];
-    glm::vec1 EulerCatPitch = tM * catmullRomM * EulerPitch;
+    glm::vec1 EulerCatPitch = tM * BlendingM * EulerPitch;
     float ECPitch = EulerCatPitch[0] + EulerCatPitch[1] + EulerCatPitch[2] + EulerCatPitch[3];
-    glm::vec1 EulerCatRoll = tM * catmullRomM * EulerRoll;
+    glm::vec1 EulerCatRoll = tM * BlendingM * EulerRoll;
     float ECRoll = EulerCatRoll[0] + EulerCatRoll[1] + EulerCatRoll[2] + EulerCatRoll[3];
     
     float cx = cos(ECYaw);
@@ -218,13 +228,13 @@ int main()
         
         float tData[4] = { t*t*t, t*t, t, 1};
         glm::vec4 tM = glm::make_vec4(tData);
-        
+
         float controlPointEulerX[4] =
-        {-0.5, -0.4, 0.5, 0.75};
+        {   -1, -0.8, 0.8, 1 };
         
         float controlPointEulerY[16] =
         {
-            -0.5, -0.4, 0.5, 0.75
+             0, 1, -1, 0
         };
         float controlPointEulerZ[16] =
         {
@@ -251,17 +261,17 @@ int main()
         glm::vec4 EulerPitch = glm::make_vec4(controlPointEulerPitch);
         glm::vec4 EulerRoll = glm::make_vec4(controlPointEulerRoll);
         
-        glm::vec4 EulerCatX = tM * catmullRomM * EulerX;
+        glm::vec4 EulerCatX = tM * BlendingM * EulerX;
         float ECX = EulerCatX[0] + EulerCatX[1] + EulerCatX[2] + EulerCatX[3];
-        glm::vec4 EulerCatY = tM * catmullRomM * EulerY;
+        glm::vec4 EulerCatY = tM * BlendingM * EulerY;
         float ECY = EulerCatY[0] + EulerCatY[1] + EulerCatY[2] + EulerCatY[3];
-        glm::vec4 EulerCatZ = tM * catmullRomM * EulerZ;
+        glm::vec4 EulerCatZ = tM * BlendingM * EulerZ;
         float ECZ = EulerCatZ[0] + EulerCatZ[1] + EulerCatZ[2] + EulerCatZ[3];
-        glm::vec1 EulerCatYaw = tM * catmullRomM * EulerYaw;
+        glm::vec1 EulerCatYaw = tM * BlendingM * EulerYaw;
         float ECYaw = EulerCatYaw[0] + EulerCatYaw[1] + EulerCatYaw[2] + EulerCatYaw[3];
-        glm::vec1 EulerCatPitch = tM * catmullRomM * EulerPitch;
+        glm::vec1 EulerCatPitch = tM * BlendingM * EulerPitch;
         float ECPitch = EulerCatPitch[0] + EulerCatPitch[1] + EulerCatPitch[2] + EulerCatPitch[3];
-        glm::vec1 EulerCatRoll = tM * catmullRomM * EulerRoll;
+        glm::vec1 EulerCatRoll = tM * BlendingM * EulerRoll;
         float ECRoll = EulerCatRoll[0] + EulerCatRoll[1] + EulerCatRoll[2] + EulerCatRoll[3];
         
         float cx = cos(ECYaw);
