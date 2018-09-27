@@ -96,11 +96,11 @@ int main(int argc, char ** argv)
     float controlPointEulerX[4] =
     {   -1, -0.8, 0.8, 1};
     
-    float controlPointEulerY[4] =
+    float controlPointEulerY[16] =
     {
          0, 1, -1, 0
     };
-    float controlPointEulerZ[4] =
+    float controlPointEulerZ[16] =
     {
         -0.5, -0.4, 0.5, 0.75
     };
@@ -108,15 +108,15 @@ int main(int argc, char ** argv)
     glm::vec4 EulerY = glm::make_vec4(controlPointEulerY);
     glm::vec4 EulerZ = glm::make_vec4(controlPointEulerZ);
     
-    float controlPointEulerYaw[4] =
+    float controlPointEulerYaw[16] =
     {
         1.5705963, 0, 1.3264163, 0.6154797
     };
-    float controlPointEulerPitch[4] =
+    float controlPointEulerPitch[16] =
     {
         0, 0.7853981, 0, 0.5235988
     };
-    float controlPointEulerRoll[4] =
+    float controlPointEulerRoll[16] =
     {
         0, 0, -0.6134645, -0.1699185
         
@@ -232,11 +232,11 @@ int main(int argc, char ** argv)
         float controlPointEulerX[4] =
         {   -1, -0.8, 0.8, 1 };
         
-        float controlPointEulerY[4] =
+        float controlPointEulerY[16] =
         {
              0, 1, -1, 0
         };
-        float controlPointEulerZ[4] =
+        float controlPointEulerZ[16] =
         {
             -0.5, -0.4, 0.5, 0.75
         };
@@ -244,15 +244,15 @@ int main(int argc, char ** argv)
         glm::vec4 EulerY = glm::make_vec4(controlPointEulerY);
         glm::vec4 EulerZ = glm::make_vec4(controlPointEulerZ);
         
-        float controlPointEulerYaw[4] =
+        float controlPointEulerYaw[16] =
         {
             1.5705963, 0, 1.3264163, 0.6154797
         };
-        float controlPointEulerPitch[4] =
+        float controlPointEulerPitch[16] =
         {
             0, 0.7853981, 0, 0.5235988
         };
-        float controlPointEulerRoll[4] =
+        float controlPointEulerRoll[16] =
         {
             0, 0, -0.6134645, -0.1699185
             
