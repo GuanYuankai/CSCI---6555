@@ -68,35 +68,45 @@ int main()
     glm::vec4 tM = glm::make_vec4(tData);
     
     float controlPointEulerX[16] =
-    {
-        0,  0,  0,  0,
-        0.25,   1.5707963,  0,  0,
-        0.75,   0,  0.7853981,  0,
-        1,  1.3264163,  0.770319,   -0.6134645
+    {   0,  0,  0,  0,
+        0.25,   0,  0,  0,
+        0.5,    0,  0,  0,
+        0.75,   0,  0,  0
     };
-    glm::mat4 EulerXM = glm::make_mat4(controlPointEulerX);
     
     float controlPointEulerY[16] =
     {
-        0,  0,  0,  0,
-        0.5,   1.5707963,  0,  0,
-        0.85,   0,  0.7853981,  0,
-        1,  1.3264163,  0.770319,   -0.6134645
+        0,      0,  0,  0,
+        0.25,   0,  0,  0,
+        0.5,    0,  0,  0,
+        0.75,   0,  0,  0
+        
     };
-    glm::mat4 EulerYM = glm::make_mat4(controlPointEulerY);
-    
     float controlPointEulerZ[16] =
     {
-        0,  0,  0,  0,
-        0.4,   1.5707963,  0,  0,
-        0.75,   0,  0.7853981,  0,
-        1,  1.3264163,  0.770319,   -0.6134645
+        0,      0,  0,  0,
+        0.25,   0,  0,  0,
+        0.5,    0,  0,  0,
+        0.75,   0,  0,  0
+        
     };
-    glm::mat4 EulerZM = glm::make_mat4(controlPointEulerZ);
+    glm::mat4 EulerX = glm::make_mat4(controlPointEulerX);
+    glm::mat4 EulerY = glm::make_mat4(controlPointEulerY);
+    glm::mat4 EulerZ = glm::make_mat4(controlPointEulerZ);
     
-    glm::vec1 EulerCatXQ = tM * catmullRomM * EulerXM;
-    glm::vec1 EulerCatYQ = tM * catmullRomM * EulerYM;
-    glm::vec1 EulerCatZQ = tM * catmullRomM * EulerZM;
+    float controlPointEulerYaw[4] = {1.5705963, 0,  1.3264163};
+    float controlPointEulerPitch[4] = {0,   0.7853981,  0};
+    float controlPointEulerRoll[4] = {0,    0,  -0.6134645};
+    glm::vec4 EulerYaw = glm::make_vec4(controlPointEulerYaw);
+    glm::vec4 EulerPitch = glm::make_vec4(controlPointEulerPitch);
+    glm::vec4 EulerRoll = glm::make_vec4(controlPointEulerRoll);
+    
+    glm::vec1 EulerCatX = tM * catmullRomM * EulerX;
+    glm::vec1 EulerCatY = tM * catmullRomM * EulerY;
+    glm::vec1 EulerCatZ = tM * catmullRomM * EulerZ;
+
+   
+
     
     
 }
