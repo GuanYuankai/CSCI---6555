@@ -93,71 +93,89 @@ int main(int argc, char ** argv)
     float tData[4] = { t*t*t, t*t, t, 1};
     glm::vec4 tM = glm::make_vec4(tData);
     
-    float controlPointEulerX[4] =
-    {   -1, -0.8, 0.8, 1};
+    float controlPointX[4] =
+    {
+        -1, -0.8, 0.8, 1
+    };
     
-    float controlPointEulerY[16] =
+    float controlPointY[4] =
     {
          0, 1, -1, 0
     };
-    float controlPointEulerZ[16] =
+    float controlPointZ[4] =
     {
         -0.5, -0.4, 0.5, 0.75
     };
-    glm::vec4 EulerX = glm::make_vec4(controlPointEulerX);
-    glm::vec4 EulerY = glm::make_vec4(controlPointEulerY);
-    glm::vec4 EulerZ = glm::make_vec4(controlPointEulerZ);
     
-    float controlPointEulerYaw[16] =
+    glm::vec4 X = glm::make_vec4(controlPointX);
+    glm::vec4 Y = glm::make_vec4(controlPointY);
+    glm::vec4 Z = glm::make_vec4(controlPointZ);
+    
+    float controlPointQuaX[4] =
     {
-        1.5705963, 0, 1.3264163, 0.6154797
+        0.0137056, 0, 0.0115747, 0.0053642
     };
-    float controlPointEulerPitch[16] =
+    float controlPointQuaY[4] =
     {
-        0, 0.7853981, 0, 0.5235988
+        0, 0.0068538, 0.000062, 0.0045771
     };
-    float controlPointEulerRoll[16] =
+    float controlPointQuaZ[4] =
     {
-        0, 0, -0.6134645, -0.1699185
+        0, 0, -0.0053531, -0.0014582
         
     };
-    glm::vec4 EulerYaw = glm::make_vec4(controlPointEulerYaw);
-    glm::vec4 EulerPitch = glm::make_vec4(controlPointEulerPitch);
-    glm::vec4 EulerRoll = glm::make_vec4(controlPointEulerRoll);
-    
-    glm::vec4 EulerCatX = tM * BlendingM * EulerX;
-    float ECX = EulerCatX[0] + EulerCatX[1] + EulerCatX[2] + EulerCatX[3];
-    glm::vec4 EulerCatY = tM * BlendingM * EulerY;
-    float ECY = EulerCatY[0] + EulerCatY[1] + EulerCatY[2] + EulerCatY[3];
-    glm::vec4 EulerCatZ = tM * BlendingM * EulerZ;
-    float ECZ = EulerCatZ[0] + EulerCatZ[1] + EulerCatZ[2] + EulerCatZ[3];
-    glm::vec1 EulerCatYaw = tM * BlendingM * EulerYaw;
-    float ECYaw = EulerCatYaw[0] + EulerCatYaw[1] + EulerCatYaw[2] + EulerCatYaw[3];
-    glm::vec1 EulerCatPitch = tM * BlendingM * EulerPitch;
-    float ECPitch = EulerCatPitch[0] + EulerCatPitch[1] + EulerCatPitch[2] + EulerCatPitch[3];
-    glm::vec1 EulerCatRoll = tM * BlendingM * EulerRoll;
-    float ECRoll = EulerCatRoll[0] + EulerCatRoll[1] + EulerCatRoll[2] + EulerCatRoll[3];
-    
-    float cx = cos(ECYaw);
-    float sx = sin(ECYaw);
-    float cy = cos(ECPitch);
-    float sy = sin(ECPitch);
-    float cz = cos(ECRoll);
-    float sz = sin(ECRoll);
-    
-    float EulerRotate[9] =
+    float controlPointQuaW[4] =
     {
-        cy * cz,    cz * sx * sy - cx * sz,     sx * sz + cx * cz * sy,
-        cy * cz,    cx * cz + sx * sy * sz,     cx * sy * sz - cz * sz,
-        -sy,        cy * sx,                    cx * cy
+        0.9999061, 0.9999765, 0.9999187, 0.9999741
     };
-    glm::mat3 rotate = glm::make_mat3(EulerRotate);
+    glm::vec4 QuaX = glm::make_vec4(controlPointQuaX);
+    glm::vec4 QuaY = glm::make_vec4(controlPointQuaY);
+    glm::vec4 QuaZ = glm::make_vec4(controlPointQuaZ);
+    glm::vec4 QuaW = glm::make_vec4(controlPointQuaW);
+    
+    glm::vec4 Xt = tM * BlendingM * X;
+    float Xts = Xt[0] + Xt[1] + Xt[2] + Xt[3];
+    glm::vec4 Yt = tM * BlendingM * Y;
+    float Yts = Yt[0] + Yt[1] + Yt[2] + Yt[3];
+    glm::vec4 Zt = tM * BlendingM * Z;
+    float Zts = Zt[0] + Zt[1] + Zt[2] + Zt[3];
+    glm::vec4 QuaXt = tM * BlendingM * QuaX;
+    float QuaXts = QuaXt[0] + QuaXt[1] + QuaXt[2] + QuaXt[3];
+    glm::vec4 QuaYt = tM * BlendingM * QuaY;
+    float QuaYts = QuaYt[0] + QuaYt[1] + QuaYt[2] + QuaYt[3];
+    glm::vec4 QuaZt = tM * BlendingM * QuaZ;
+    float QuaZts = QuaZt[0] + QuaZt[1] + QuaZt[2] + QuaZt[3];
+    glm::vec4 QuaWt = tM * BlendingM * QuaW;
+    float QuaWts = QuaWt[0] + QuaWt[1] + QuaWt[2] + QuaWt[3];
+    
+    float normalBase = sqrt(QuaXts*QuaXts + QuaYts*QuaYts + QuaZts*QuaZts + QuaWts*QuaWts);
+    float nQuaX = QuaXts / normalBase;
+    float nQuaY = QuaYts / normalBase;
+    float nQuaZ = QuaZts / normalBase;
+    float nQuaW = QuaWts / normalBase;
+
+    
+
+    
+    float QuaRotate[9] =
+    {
+        1 - 2 * nQuaY * nQuaY - 2 * nQuaZ * nQuaZ,
+        2 * nQuaX * nQuaY + 2 * nQuaZ * nQuaW,
+        2 * nQuaX * nQuaZ - 2 * nQuaY * nQuaW,
+        2 * nQuaX * nQuaY - 2 * nQuaZ * nQuaW,
+        1 - 2 * nQuaX * nQuaX,
+        2 * nQuaY * nQuaZ + 2 * nQuaX * nQuaW,
+        2 * nQuaX * nQuaZ + 2 * nQuaY * nQuaW,
+        2 * nQuaY * nQuaZ - 2 * nQuaX * nQuaW,
+        1 - 2 * nQuaX * nQuaX - 2 * nQuaY * nQuaY
+    };
+    glm::mat3 rotate = glm::make_mat3(QuaRotate);
     
     glm::mat4 transform(rotate);
     transform[3][3] = 1.0f;
-    transform[3][0] = ECX;
-    transform[3][1] = ECY;
-    transform[3][2] = ECZ;
+    transform[3][0] = Xts;
+    transform[3][1] = Yts;
+    transform[3][2] = Zts;
     cout << to_string(transform) << endl;
     
    
@@ -228,72 +246,90 @@ int main(int argc, char ** argv)
         
         float tData[4] = { t*t*t, t*t, t, 1};
         glm::vec4 tM = glm::make_vec4(tData);
-
-        float controlPointEulerX[4] =
-        {   -1, -0.8, 0.8, 1 };
         
-        float controlPointEulerY[16] =
+        float controlPointX[4] =
         {
-             0, 1, -1, 0
+            -1, -0.8, 0.8, 1
         };
-        float controlPointEulerZ[16] =
+        
+        float controlPointY[4] =
+        {
+            0, 1, -1, 0
+        };
+        float controlPointZ[4] =
         {
             -0.5, -0.4, 0.5, 0.75
         };
-        glm::vec4 EulerX = glm::make_vec4(controlPointEulerX);
-        glm::vec4 EulerY = glm::make_vec4(controlPointEulerY);
-        glm::vec4 EulerZ = glm::make_vec4(controlPointEulerZ);
         
-        float controlPointEulerYaw[16] =
+        glm::vec4 X = glm::make_vec4(controlPointX);
+        glm::vec4 Y = glm::make_vec4(controlPointY);
+        glm::vec4 Z = glm::make_vec4(controlPointZ);
+        
+        float controlPointQuaX[4] =
         {
-            1.5705963, 0, 1.3264163, 0.6154797
+            0.0137056, 0, 0.0115747, 0.0053642
         };
-        float controlPointEulerPitch[16] =
+        float controlPointQuaY[4] =
         {
-            0, 0.7853981, 0, 0.5235988
+            0, 0.0068538, 0.000062, 0.0045771
         };
-        float controlPointEulerRoll[16] =
+        float controlPointQuaZ[4] =
         {
-            0, 0, -0.6134645, -0.1699185
+            0, 0, -0.0053531, -0.0014582
             
         };
-        glm::vec4 EulerYaw = glm::make_vec4(controlPointEulerYaw);
-        glm::vec4 EulerPitch = glm::make_vec4(controlPointEulerPitch);
-        glm::vec4 EulerRoll = glm::make_vec4(controlPointEulerRoll);
-        
-        glm::vec4 EulerCatX = tM * BlendingM * EulerX;
-        float ECX = EulerCatX[0] + EulerCatX[1] + EulerCatX[2] + EulerCatX[3];
-        glm::vec4 EulerCatY = tM * BlendingM * EulerY;
-        float ECY = EulerCatY[0] + EulerCatY[1] + EulerCatY[2] + EulerCatY[3];
-        glm::vec4 EulerCatZ = tM * BlendingM * EulerZ;
-        float ECZ = EulerCatZ[0] + EulerCatZ[1] + EulerCatZ[2] + EulerCatZ[3];
-        glm::vec1 EulerCatYaw = tM * BlendingM * EulerYaw;
-        float ECYaw = EulerCatYaw[0] + EulerCatYaw[1] + EulerCatYaw[2] + EulerCatYaw[3];
-        glm::vec1 EulerCatPitch = tM * BlendingM * EulerPitch;
-        float ECPitch = EulerCatPitch[0] + EulerCatPitch[1] + EulerCatPitch[2] + EulerCatPitch[3];
-        glm::vec1 EulerCatRoll = tM * BlendingM * EulerRoll;
-        float ECRoll = EulerCatRoll[0] + EulerCatRoll[1] + EulerCatRoll[2] + EulerCatRoll[3];
-        
-        float cx = cos(ECYaw);
-        float sx = sin(ECYaw);
-        float cy = cos(ECPitch);
-        float sy = sin(ECPitch);
-        float cz = cos(ECRoll);
-        float sz = sin(ECRoll);
-        
-        float EulerRotate[9] =
+        float controlPointQuaW[4] =
         {
-            cy * cz,    cz * sx * sy - cx * sz,     sx * sz + cx * cz * sy,
-            cy * cz,    cx * cz + sx * sy * sz,     cx * sy * sz - cz * sz,
-            -sy,        cy * sx,                    cx * cy
+            0.9999061, 0.9999765, 0.9999187, 0.9999741
         };
-        glm::mat3 rotate = glm::make_mat3(EulerRotate);
+        glm::vec4 QuaX = glm::make_vec4(controlPointQuaX);
+        glm::vec4 QuaY = glm::make_vec4(controlPointQuaY);
+        glm::vec4 QuaZ = glm::make_vec4(controlPointQuaZ);
+        glm::vec4 QuaW = glm::make_vec4(controlPointQuaW);
+        
+        glm::vec4 Xt = tM * BlendingM * X;
+        float Xts = Xt[0] + Xt[1] + Xt[2] + Xt[3];
+        glm::vec4 Yt = tM * BlendingM * Y;
+        float Yts = Yt[0] + Yt[1] + Yt[2] + Yt[3];
+        glm::vec4 Zt = tM * BlendingM * Z;
+        float Zts = Zt[0] + Zt[1] + Zt[2] + Zt[3];
+        glm::vec4 QuaXt = tM * BlendingM * QuaX;
+        float QuaXts = QuaXt[0] + QuaXt[1] + QuaXt[2] + QuaXt[3];
+        glm::vec4 QuaYt = tM * BlendingM * QuaY;
+        float QuaYts = QuaYt[0] + QuaYt[1] + QuaYt[2] + QuaYt[3];
+        glm::vec4 QuaZt = tM * BlendingM * QuaZ;
+        float QuaZts = QuaZt[0] + QuaZt[1] + QuaZt[2] + QuaZt[3];
+        glm::vec4 QuaWt = tM * BlendingM * QuaW;
+        float QuaWts = QuaWt[0] + QuaWt[1] + QuaWt[2] + QuaWt[3];
+        
+        float normalBase = sqrt(QuaXts*QuaXts + QuaYts*QuaYts + QuaZts*QuaZts + QuaWts*QuaWts);
+        float nQuaX = QuaXts / normalBase;
+        float nQuaY = QuaYts / normalBase;
+        float nQuaZ = QuaZts / normalBase;
+        float nQuaW = QuaWts / normalBase;
+        
+        
+        
+        
+        float QuaRotate[9] =
+        {
+            1 - 2 * nQuaY * nQuaY - 2 * nQuaZ * nQuaZ,
+            2 * nQuaX * nQuaY + 2 * nQuaZ * nQuaW,
+            2 * nQuaX * nQuaZ - 2 * nQuaY * nQuaW,
+            2 * nQuaX * nQuaY - 2 * nQuaZ * nQuaW,
+            1 - 2 * nQuaX * nQuaX,
+            2 * nQuaY * nQuaZ + 2 * nQuaX * nQuaW,
+            2 * nQuaX * nQuaZ + 2 * nQuaY * nQuaW,
+            2 * nQuaY * nQuaZ - 2 * nQuaX * nQuaW,
+            1 - 2 * nQuaX * nQuaX - 2 * nQuaY * nQuaY
+        };
+        glm::mat3 rotate = glm::make_mat3(QuaRotate);
         
         glm::mat4 transform(rotate);
         transform[3][3] = 1.0f;
-        transform[3][0] = ECX;
-        transform[3][1] = ECY;
-        transform[3][2] = ECZ;
+        transform[3][0] = Xts;
+        transform[3][1] = Yts;
+        transform[3][2] = Zts;
         unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO);
