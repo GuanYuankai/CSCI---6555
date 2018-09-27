@@ -150,7 +150,12 @@ int main()
         -sy,        cy * sx,                    cx * cy
     };
     glm::mat3 rotate = glm::make_mat3(EulerRotate);
-
+    
+    glm::mat4 transform(rotate);
+    transform[3][3] = 1.0f;
+    transform[3][0] = EulerCatX.x;
+    transform[3][1] = EulerCatY.x;
+    transform[3][2] = EulerCatZ.x;
    
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
