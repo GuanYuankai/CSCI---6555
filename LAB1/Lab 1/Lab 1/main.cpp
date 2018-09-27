@@ -94,16 +94,40 @@ int main()
     glm::mat4 EulerY = glm::make_mat4(controlPointEulerY);
     glm::mat4 EulerZ = glm::make_mat4(controlPointEulerZ);
     
-    float controlPointEulerYaw[4] = {1.5705963, 0,  1.3264163};
-    float controlPointEulerPitch[4] = {0,   0.7853981,  0};
-    float controlPointEulerRoll[4] = {0,    0,  -0.6134645};
-    glm::vec4 EulerYaw = glm::make_vec4(controlPointEulerYaw);
-    glm::vec4 EulerPitch = glm::make_vec4(controlPointEulerPitch);
-    glm::vec4 EulerRoll = glm::make_vec4(controlPointEulerRoll);
+    float controlPointEulerYaw[16] =
+    {
+        1.5705963,  0,  0,  0,
+        0,  0,  0,  0,
+        1.3264163,  0,  0,  0,
+        0.6154797,  0,  0,  0
+        
+    };
+    float controlPointEulerPitch[16] =
+    {
+        0,  0,  0,  0,
+        0.7853981,  0,  0,  0,
+        0,  0,  0,  0,
+        0.5235988,  0,  0,  0
+        
+    };
+    float controlPointEulerRoll[4] =
+    {
+        0,  0,  0,  0,
+        0,  0,  0,  0,
+        -0.6134645, 0,  0,  0,
+        -0.1699185, 0,  0,  0
+        
+    };
+    glm::mat4 EulerYaw = glm::make_mat4(controlPointEulerYaw);
+    glm::mat4 EulerPitch = glm::make_mat4(controlPointEulerPitch);
+    glm::mat4 EulerRoll = glm::make_mat4(controlPointEulerRoll);
     
     glm::vec1 EulerCatX = tM * catmullRomM * EulerX;
     glm::vec1 EulerCatY = tM * catmullRomM * EulerY;
     glm::vec1 EulerCatZ = tM * catmullRomM * EulerZ;
+    glm::vec1 EulerCatYaw = tM * catmullRomM * EulerYaw;
+    glm::vec1 EulerCatPitch = tM * catmullRomM * EulerPitch;
+    glm::vec1 EulerCatRoll = tM * catmullRomM * EulerRoll;
 
    
 
