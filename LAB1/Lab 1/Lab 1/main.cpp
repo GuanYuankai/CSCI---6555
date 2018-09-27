@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
+#include <cmath>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -134,6 +135,21 @@ int main()
     glm::vec1 EulerCatYaw = tM * catmullRomM * EulerYaw;
     glm::vec1 EulerCatPitch = tM * catmullRomM * EulerPitch;
     glm::vec1 EulerCatRoll = tM * catmullRomM * EulerRoll;
+    
+    float cx = cos(EulerCatYaw.x);
+    float sx = sin(EulerCatYaw.x);
+    float cy = cos(EulerCatPitch.x);
+    float sy = sin(EulerCatPitch.x);
+    float cz = cos(EulerCatRoll.x);
+    float sz = sin(EulerCatRoll.x);
+    
+    float EulerRotate[9] =
+    {
+        cy * cz,    cz * sx * sy - cx * sz,     sx * sz + cx * cz * sy,
+        cy * cz,    cx * cz + sx * sy * sz,     cx * sy * sz - cz * sz,
+        -sy,        cy * sx,                    cx * cy
+    };
+    glm::mat3 rotate = glm::make_mat3(EulerRotate);
 
    
     glfwInit();
@@ -144,7 +160,27 @@ int main()
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
+    
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LAB1", NULL, NULL);
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    
+    // glad: load all OpenGL function pointers
 
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+    
+
+    Shader ourShader("shader.vs", "shader.fs");
     
     
 }
