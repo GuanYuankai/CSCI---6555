@@ -76,6 +76,15 @@ int main()
     };
     glm::mat4 EulerXM = glm::make_mat4(controlPointEulerX);
     
+    float controlPointEulerY[16] =
+    {
+        0,  0,  0,  0,
+        0.5,   1.5707963,  0,  0,
+        0.85,   0,  0.7853981,  0,
+        1,  1.3264163,  0.770319,   -0.6134645
+    }
+    glm::mat4 EulerYM = glm::make_mat4(controlPointEulerY);
+    
     
     
     
