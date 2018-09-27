@@ -33,6 +33,7 @@
 		AE32F000215C68AC009FAF88 /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../../usr/local/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
 		AE32F002215C690E009FAF88 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../../usr/local/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
 		AE32F006215C6BB4009FAF88 /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
+		AE32F00C215CB4DB009FAF88 /* shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +72,7 @@
 			children = (
 				AE32F006215C6BB4009FAF88 /* glad.c */,
 				AE32EFF6215C6870009FAF88 /* main.cpp */,
+				AE32F00C215CB4DB009FAF88 /* shader.h */,
 			);
 			path = "Lab 1";
 			sourceTree = "<group>";
