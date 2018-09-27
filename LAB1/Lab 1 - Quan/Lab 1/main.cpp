@@ -88,7 +88,8 @@ int main(int argc, char ** argv)
     }
    
     float time1 = glfwGetTime();
-    float t = fmod(time1, 1);
+//    float t = fmod(time1, 1);
+    float t = 0.5;
 
     float tData[4] = { t*t*t, t*t, t, 1};
     glm::vec4 tM = glm::make_vec4(tData);
@@ -113,20 +114,20 @@ int main(int argc, char ** argv)
     
     float controlPointQuaX[4] =
     {
-        0.0137056, 0, 0.0115747, 0.0053642
+        0.7070341, 0, 0.05869129, 0.2705979
     };
     float controlPointQuaY[4] =
     {
-        0, 0.0068538, 0.000062, 0.0045771
+        0, 0.387298, 0.1858919, 0.2705981
     };
     float controlPointQuaZ[4] =
     {
-        0, 0, -0.0053531, -0.0014582
+        0, 0, -0.2379391, -0.00000001
         
     };
     float controlPointQuaW[4] =
     {
-        0.9999061, 0.9999765, 0.9999187, 0.9999741
+        0.7071795, 0.9219546, 0.7512406, 0.785398
     };
     glm::vec4 QuaX = glm::make_vec4(controlPointQuaX);
     glm::vec4 QuaY = glm::make_vec4(controlPointQuaY);
@@ -148,11 +149,17 @@ int main(int argc, char ** argv)
     glm::vec4 QuaWt = tM * BlendingM * QuaW;
     float QuaWts = QuaWt[0] + QuaWt[1] + QuaWt[2] + QuaWt[3];
     
+    cout << QuaXts << " " << QuaYts << " " << QuaZts << " "<< QuaWts;
+
+    
     float normalBase = sqrt(QuaXts*QuaXts + QuaYts*QuaYts + QuaZts*QuaZts + QuaWts*QuaWts);
+    cout << normalBase << endl;
+    
     float nQuaX = QuaXts / normalBase;
     float nQuaY = QuaYts / normalBase;
     float nQuaZ = QuaZts / normalBase;
     float nQuaW = QuaWts / normalBase;
+    cout << nQuaX << " " << nQuaY << " " << nQuaZ << " "<< nQuaW << endl;
 
     
 
@@ -176,7 +183,7 @@ int main(int argc, char ** argv)
     transform[3][0] = Xts;
     transform[3][1] = Yts;
     transform[3][2] = Zts;
-    cout << to_string(transform) << endl;
+
     
    
     glfwInit();
@@ -241,6 +248,7 @@ int main(int argc, char ** argv)
         glClear(GL_COLOR_BUFFER_BIT);
         ourShader.use();
         
+        
         float time1 = glfwGetTime();
         float t = fmod(time1, 1);
         
@@ -267,20 +275,20 @@ int main(int argc, char ** argv)
         
         float controlPointQuaX[4] =
         {
-            0.0137056, 0, 0.0115747, 0.0053642
+            0.7070341, 0, 0.05869129, 0.2705979
         };
         float controlPointQuaY[4] =
         {
-            0, 0.0068538, 0.000062, 0.0045771
+            0, 0.387298, 0.1858919, 0.2705981
         };
         float controlPointQuaZ[4] =
         {
-            0, 0, -0.0053531, -0.0014582
+            0, 0, -0.2379391, -0.00000001
             
         };
         float controlPointQuaW[4] =
         {
-            0.9999061, 0.9999765, 0.9999187, 0.9999741
+            0.7071795, 0.9219546, 0.7512406, 0.785398
         };
         glm::vec4 QuaX = glm::make_vec4(controlPointQuaX);
         glm::vec4 QuaY = glm::make_vec4(controlPointQuaY);
@@ -330,6 +338,7 @@ int main(int argc, char ** argv)
         transform[3][0] = Xts;
         transform[3][1] = Yts;
         transform[3][2] = Zts;
+//    cout << to_string(transform) << endl;
         unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO);
