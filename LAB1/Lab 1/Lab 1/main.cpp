@@ -49,6 +49,7 @@ int main()
         
     };
     glm::mat4 catmullRomM = glm::make_mat4(catmullRomData);
+    
  
     float B_splinesData[16] =
     {
@@ -57,8 +58,12 @@ int main()
         -3.0 / 6,       0.0,    3.0 / 6,       0.0,
          1.0 / 6,   4.0 / 6,    1.0 / 6,       0.0
     };
-    
     glm::mat4 B_SplinesM = glm::make_mat4(B_splinesData);
+    
+   
+    float t = glfwGetTime();
+    float tData[4] = { t*t*t, t*t, t, 1};
+    glm::vec4 tM = glm::make_vec4(tData);
     
   
     
