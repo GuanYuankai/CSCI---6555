@@ -35,6 +35,7 @@
 		AE32F006215C6BB4009FAF88 /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
 		AE32F00C215CB4DB009FAF88 /* shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		AE32F00D215CB5EF009FAF88 /* shader.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader.vs; sourceTree = "<group>"; };
+		AE32F00E215CBF0B009FAF88 /* shader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +75,7 @@
 				AE32F006215C6BB4009FAF88 /* glad.c */,
 				AE32EFF6215C6870009FAF88 /* main.cpp */,
 				AE32F00D215CB5EF009FAF88 /* shader.vs */,
+				AE32F00E215CBF0B009FAF88 /* shader.fs */,
 				AE32F00C215CB4DB009FAF88 /* shader.h */,
 			);
 			path = "Lab 1";
