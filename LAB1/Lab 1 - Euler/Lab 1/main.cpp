@@ -23,7 +23,7 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main(int argc, char ** argv)
 {
-
+    //read model from file
     ifstream myfile("teapot.off");
     if(!myfile)
     {
@@ -37,6 +37,7 @@ int main(int argc, char ** argv)
     myfile >> numberVertex >> numberIndice >> zero;
     float vertex[numberVertex * 3];
     int indice[numberIndice * 4];
+    //load vertex parameter and indice parameter
     for(i = 0; i < numberVertex * 3; i++)
     {
         myfile >> vertex[i];
@@ -56,7 +57,7 @@ int main(int argc, char ** argv)
         j++;
 
     }
-
+    //give two blending function
     float catmullRomData[16] =
     {
 
@@ -86,7 +87,9 @@ int main(int argc, char ** argv)
     }else{
         BlendingM = B_SplinesM;
     }
-   
+    
+    //calculate data and get Q(t)
+   // T parameter
     float time1 = glfwGetTime();
     float t = fmod(time1, 1);
 
@@ -167,7 +170,7 @@ int main(int argc, char ** argv)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
 #ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
     
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LAB1", NULL, NULL);
@@ -222,7 +225,7 @@ int main(int argc, char ** argv)
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         ourShader.use();
-        
+        //recalculate
         float time1 = glfwGetTime();
         float t = fmod(time1, 1);
         
@@ -306,8 +309,7 @@ int main(int argc, char ** argv)
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
+
     glfwTerminate();
     return 0;
 }
@@ -318,11 +320,9 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and
-    // height will be significantly larger than specified on retina displays.
+
     glViewport(0, 0, width, height);
 }

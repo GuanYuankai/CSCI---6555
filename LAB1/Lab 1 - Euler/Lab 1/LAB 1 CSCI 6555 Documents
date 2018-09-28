@@ -1,0 +1,9 @@
+LAB 1 CSCI 6555
+		Yuankai Guan
+
+This Project use GLFW as based library.
+I calculated all datas in two styles(Euler and quaterion) then pass to shader.
+
+I put the data before it is initialized and then calculate the new interpolation each loop.
+
+I read model from file, this file must be off format, and no "off" at begin. You can find a teapot.off file as example

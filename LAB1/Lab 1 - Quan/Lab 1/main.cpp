@@ -23,7 +23,7 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main(int argc, char ** argv)
 {
-
+    //load model from file
     ifstream myfile("teapot.off");
     if(!myfile)
     {
@@ -56,7 +56,7 @@ int main(int argc, char ** argv)
         j++;
 
     }
-
+    //two Blending Matrix
     float catmullRomData[16] =
     {
 
@@ -88,8 +88,8 @@ int main(int argc, char ** argv)
     }
    
     float time1 = glfwGetTime();
-//    float t = fmod(time1, 1);
-    float t = 0.5;
+    float t = fmod(time1, 1);
+
 
     float tData[4] = { t*t*t, t*t, t, 1};
     glm::vec4 tM = glm::make_vec4(tData);
@@ -111,7 +111,7 @@ int main(int argc, char ** argv)
     glm::vec4 X = glm::make_vec4(controlPointX);
     glm::vec4 Y = glm::make_vec4(controlPointY);
     glm::vec4 Z = glm::make_vec4(controlPointZ);
-    
+    //give control point quaternion
     float controlPointQuaX[4] =
     {
         0.7070341, 0, 0.05869129, 0.2705979
@@ -154,7 +154,7 @@ int main(int argc, char ** argv)
     
     float normalBase = sqrt(QuaXts*QuaXts + QuaYts*QuaYts + QuaZts*QuaZts + QuaWts*QuaWts);
     cout << normalBase << endl;
-    
+    //normalize quaternion
     float nQuaX = QuaXts / normalBase;
     float nQuaY = QuaYts / normalBase;
     float nQuaZ = QuaZts / normalBase;
@@ -163,7 +163,7 @@ int main(int argc, char ** argv)
 
     
 
-    
+    // transfer Quaterion to Rotate Matrix
     float QuaRotate[9] =
     {
         1 - 2 * nQuaY * nQuaY - 2 * nQuaZ * nQuaZ,
@@ -248,7 +248,7 @@ int main(int argc, char ** argv)
         glClear(GL_COLOR_BUFFER_BIT);
         ourShader.use();
         
-        
+        //recalculate
         float time1 = glfwGetTime();
         float t = fmod(time1, 1);
         
@@ -363,11 +363,9 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and
-    // height will be significantly larger than specified on retina displays.
+
     glViewport(0, 0, width, height);
 }
