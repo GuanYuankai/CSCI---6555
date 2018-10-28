@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/ext.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
 #include "shader.h"
@@ -21,7 +22,7 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-int main(int argc, char ** argv)
+int main()
 {
     //read model from file
     ifstream myfile("teapot.off");
@@ -58,6 +59,7 @@ int main(int argc, char ** argv)
         
     }
 
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -85,9 +87,9 @@ int main(int argc, char ** argv)
         return -1;
     }
     
-    
+    glEnable(GL_DEPTH_TEST);
     Shader ourShader("shader.vs", "shader.fs");
-    
+
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -109,6 +111,13 @@ int main(int argc, char ** argv)
     glBindVertexArray(0);
     
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glm::mat4 view;
+    view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f),
+                       glm::vec3(0.0f, 0.0f, 0.0f),
+                       glm::vec3(0.0f, 1.0f, 0.0f));
+    std::cout<<glm::to_string(view)<<std::endl;
+
+
     
     while (!glfwWindowShouldClose(window))
     {
@@ -117,9 +126,12 @@ int main(int argc, char ** argv)
         
         
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         ourShader.use();
-  
+
+
+ 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
