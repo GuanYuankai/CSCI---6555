@@ -25,7 +25,7 @@ const unsigned int SCR_HEIGHT = 600;
 int main()
 {
     //read model from file
-    ifstream myfile("teapot.off");
+    ifstream myfile("body.off");
     if(!myfile)
     {
         cout << "Fail to Open File" << endl;
@@ -58,6 +58,15 @@ int main()
         j++;
         
     }
+    glm::mat4 body = glm::mat4(1.0f);
+    
+    glm::mat4 legLeft = glm::mat4(1.0f);
+    legLeft = glm::translate(body, glm::vec3(-1.0f, -5.0f, 0.0f));
+
+    
+
+        
+
 
 
     glfwInit();
@@ -96,27 +105,41 @@ int main()
     glGenBuffers(1, &EBO);
     
     glBindVertexArray(VAO);
-    
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, numberVertex * 3 * 4, vertex, GL_STATIC_DRAW);
-    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, numberIndice * 3 * 4, indice, GL_STATIC_DRAW);
-    //    cout<< numberIndice * 3 * 4 << endl;
-    
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    unsigned int VBO2, VAO2, EBO2;
+    glGenVertexArrays(2, &VAO2);
+    glGenBuffers(2, &VBO2);
+    glGenBuffers(2, &EBO2);
+    
+    glBindVertexArray(VAO2);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+    glBufferData(GL_ARRAY_BUFFER, numberVertex * 3 * 4, vertex, GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO2);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numberIndice * 3 * 4, indice, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    
+    
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
     glm::mat4 view = glm::mat4(1.0f);
-    view = glm::lookAt(glm::vec3(0.3f, 0.8f, 0.6f),
+    view = glm::lookAt(glm::vec3(1.0f, 2.0f, 3.0f),
                        glm::vec3(0.0f, 0.0f, 0.0f),
                        glm::vec3(0.0f, 1.0f, 0.0f));
-    std::cout<<glm::to_string(view)<<std::endl;
 
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 100.0f);
 
     
     while (!glfwWindowShouldClose(window))
@@ -129,12 +152,21 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         ourShader.use();
+
         int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
         glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-        
+        int projLoc = glad_glGetUniformLocation(ourShader.ID, "projection");
+        glad_glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        int transLoc = glad_glGetUniformLocation(ourShader.ID, "trans");
+ 
 
  
         glBindVertexArray(VAO);
+        glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
+        glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
+        
+        glBindVertexArray(VAO2);
+        glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legLeft));
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         glfwSwapBuffers(window);
@@ -143,7 +175,9 @@ int main()
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
-    
+    glDeleteVertexArrays(2, &VAO2);
+    glDeleteBuffers(2, &VBO2);
+    glDeleteBuffers(2, &EBO2);
     
     glfwTerminate();
     return 0;
