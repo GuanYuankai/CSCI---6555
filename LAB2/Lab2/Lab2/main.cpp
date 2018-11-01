@@ -58,14 +58,14 @@ int main()
         j++;
         
     }
+    
     glm::mat4 body = glm::mat4(1.0f);
     
     glm::mat4 legLeft = glm::mat4(1.0f);
-    legLeft = glm::translate(body, glm::vec3(-1.0f, -5.0f, 0.0f));
+    legLeft = glm::translate(body, glm::vec3(-0.1f, -0.5f, 0.0f));
+    glm::mat4 legRight = glm::mat4(1.0f);
 
-    
 
-        
 
 
 
@@ -131,10 +131,27 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     
+    unsigned int VBO3, VAO3, EBO3;
+    glGenVertexArrays(3, &VAO3);
+    glGenBuffers(3, &VBO3);
+    glGenBuffers(3, &EBO3);
+    
+    glBindVertexArray(VAO3);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, VBO3);
+    glBufferData(GL_ARRAY_BUFFER, numberVertex * 3 * 4, vertex, GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO3);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numberIndice * 3 * 4, indice, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    
     
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
     glm::mat4 view = glm::mat4(1.0f);
-    view = glm::lookAt(glm::vec3(1.0f, 2.0f, 3.0f),
+    view = glm::lookAt(glm::vec3(0.0f, 1.0f, 3.0f),
                        glm::vec3(0.0f, 0.0f, 0.0f),
                        glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -145,6 +162,37 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         
+        float time1 = glfwGetTime();
+        float t = fmod(time1, 3);
+        glm::mat4 body = glm::mat4(1.0f);
+        body = glm::translate(body,glm::vec3(0.0f, 0.0f, -1.0f));
+        
+//        glm::mat4 body = glm::mat4(1.0f);
+//
+//        glm::mat4 legLeft = glm::mat4(1.0f);
+//        legLeft = glm::translate(body, glm::vec3(-0.1f, -0.5f, 0.0f));
+//        glm::mat4 legRight = glm::mat4(1.0f);
+//        legRight = glm::translate(body, glm::vec3(0.1f, -0.5f, 0.0f));
+//        std::cout<<glm::to_string(legLeft)<<std::endl;
+        
+     
+       
+
+        
+        
+        
+
+
+        
+
+
+        glm::mat4 legLeft1 = glm::mat4(1.0f);
+        legLeft1 = glm::translate(legLeft1, glm::vec3(0.0f, 0.0f, -0.05f));
+        legLeft1 = glm::translate(legLeft1, glm::vec3(0.0f, 0.0f, 0.05f));
+        
+        legLeft = body * glm::translate( legLeft1 , glm::vec3(-0.1f, -0.5f, 0.0f));
+        
+        std::cout<<glm::to_string(legLeft)<<std::endl;
         processInput(window);
         
         
@@ -163,10 +211,15 @@ int main()
  
         glBindVertexArray(VAO);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
+//      std::cout<<glm::to_string(body)<<std::endl;
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         glBindVertexArray(VAO2);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legLeft));
+        glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
+        
+        glBindVertexArray(VAO3);
+        glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legRight));
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         glfwSwapBuffers(window);
