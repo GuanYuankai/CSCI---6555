@@ -61,10 +61,8 @@ int main()
     
     glm::mat4 body = glm::mat4(1.0f);
     
-    glm::mat4 legLeft = glm::mat4(1.0f);
-    legLeft = glm::translate(body, glm::vec3(-0.1f, -0.5f, 0.0f));
-    glm::mat4 legRight = glm::mat4(1.0f);
-    legRight = glm::translate(body, glm::vec3(0.1f, -0.5f, 0.0f));
+
+
 
 
 
@@ -176,6 +174,14 @@ int main()
         float t = fmod(time1, 3);
         glm::mat4 body = glm::mat4(1.0f);
         body = glm::translate(body,glm::vec3(0.0f, 0.0f, 0.0f + t ));
+        
+        glm::mat4 legLeft = glm::mat4(1.0f);
+        legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, 0.0f));
+        legLeft = body * legLeft;
+        
+        glm::mat4 legRight = glm::mat4(1.0f);
+        legRight = glm::translate(legRight, glm::vec3(0.1f, -0.5f, 0.0f));
+        legRight = body * legRight;
 
         int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
         glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
@@ -190,6 +196,7 @@ int main()
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         glBindVertexArray(VAO2);
+
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legLeft));
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
