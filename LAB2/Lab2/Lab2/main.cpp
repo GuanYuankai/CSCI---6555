@@ -64,6 +64,7 @@ int main()
     glm::mat4 legLeft = glm::mat4(1.0f);
     legLeft = glm::translate(body, glm::vec3(-0.1f, -0.5f, 0.0f));
     glm::mat4 legRight = glm::mat4(1.0f);
+    legRight = glm::translate(body, glm::vec3(0.1f, -0.5f, 0.0f));
 
 
 
@@ -151,7 +152,7 @@ int main()
     
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
     glm::mat4 view = glm::mat4(1.0f);
-    view = glm::lookAt(glm::vec3(0.0f, 1.0f, 3.0f),
+    view = glm::lookAt(glm::vec3(3.0f, 3.0f, 3.0f),
                        glm::vec3(0.0f, 0.0f, 0.0f),
                        glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -162,37 +163,8 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         
-        float time1 = glfwGetTime();
-        float t = fmod(time1, 3);
-        glm::mat4 body = glm::mat4(1.0f);
-        body = glm::translate(body,glm::vec3(0.0f, 0.0f, -1.0f));
-        
-//        glm::mat4 body = glm::mat4(1.0f);
-//
-//        glm::mat4 legLeft = glm::mat4(1.0f);
-//        legLeft = glm::translate(body, glm::vec3(-0.1f, -0.5f, 0.0f));
-//        glm::mat4 legRight = glm::mat4(1.0f);
-//        legRight = glm::translate(body, glm::vec3(0.1f, -0.5f, 0.0f));
-//        std::cout<<glm::to_string(legLeft)<<std::endl;
-        
-     
-       
-
-        
-        
-        
 
 
-        
-
-
-        glm::mat4 legLeft1 = glm::mat4(1.0f);
-        legLeft1 = glm::translate(legLeft1, glm::vec3(0.0f, 0.0f, -0.05f));
-        legLeft1 = glm::translate(legLeft1, glm::vec3(0.0f, 0.0f, 0.05f));
-        
-        legLeft = body * glm::translate( legLeft1 , glm::vec3(-0.1f, -0.5f, 0.0f));
-        
-        std::cout<<glm::to_string(legLeft)<<std::endl;
         processInput(window);
         
         
@@ -200,6 +172,10 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         ourShader.use();
+        float time1 = glfwGetTime();
+        float t = fmod(time1, 3);
+        glm::mat4 body = glm::mat4(1.0f);
+        body = glm::translate(body,glm::vec3(0.0f, 0.0f, 0.0f  ));
 
         int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
         glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
@@ -211,7 +187,6 @@ int main()
  
         glBindVertexArray(VAO);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
-//      std::cout<<glm::to_string(body)<<std::endl;
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         glBindVertexArray(VAO2);
@@ -231,6 +206,9 @@ int main()
     glDeleteVertexArrays(2, &VAO2);
     glDeleteBuffers(2, &VBO2);
     glDeleteBuffers(2, &EBO2);
+    glDeleteVertexArrays(3, &VAO3);
+    glDeleteBuffers(3, &VBO3);
+    glDeleteBuffers(3, &EBO3);
     
     glfwTerminate();
     return 0;
