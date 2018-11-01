@@ -110,9 +110,9 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glm::mat4 view;
-    view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f),
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glm::mat4 view = glm::mat4(1.0f);
+    view = glm::lookAt(glm::vec3(0.3f, 0.8f, 0.6f),
                        glm::vec3(0.0f, 0.0f, 0.0f),
                        glm::vec3(0.0f, 1.0f, 0.0f));
     std::cout<<glm::to_string(view)<<std::endl;
@@ -129,7 +129,9 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         ourShader.use();
-
+        int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
+        glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        
 
  
         glBindVertexArray(VAO);

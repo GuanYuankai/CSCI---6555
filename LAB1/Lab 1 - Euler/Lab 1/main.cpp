@@ -309,7 +309,7 @@ int main(int argc, char ** argv)
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     
-
+val
     glfwTerminate();
     return 0;
 }
