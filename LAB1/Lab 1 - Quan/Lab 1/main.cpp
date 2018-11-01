@@ -152,7 +152,7 @@ int main(int argc, char ** argv)
     cout << QuaXts << " " << QuaYts << " " << QuaZts << " "<< QuaWts;
 
     
-    float normalBase = sqrt(QuaXts*QuaXts + QuaYts*QuaYts + QuaZts*QuaZts + QuaWts*QuaWts);
+    float   = sqrt(QuaXts*QuaXts + QuaYts*QuaYts + QuaZts*QuaZts + QuaWts*QuaWts);
     cout << normalBase << endl;
     //normalize quaternion
     float nQuaX = QuaXts / normalBase;

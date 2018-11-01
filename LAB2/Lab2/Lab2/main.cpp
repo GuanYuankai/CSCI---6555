@@ -233,3 +233,61 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     
     glViewport(0, 0, width, height);
 }
+
+void interpulate(float Qua1[4], float Qua2[4], float time )
+{
+    float quaX[2] = {Qua1[0], Qua2[0]};
+    float quaY[2] = {Qua1[1], Qua2[1]};
+    float quaZ[2] = {Qua1[2], Qua2[2]};
+    float quaW[2] = {Qua1[3], Qua2[3]};
+    glm::vec2 Qx = glm::make_vec2(quaX);
+    glm::vec2 Qy = glm::make_vec2(quaY);
+    glm::vec2 Qz = glm::make_vec2(quaZ);
+    glm::vec2 Qw = glm::make_vec2(quaW);
+    float blendingM[4] =
+    {
+        -1, 1,
+        1,  0
+    };
+    glm::mat2 M = glm::make_mat2(blendingM);
+    float t[2] = {time, 1};
+    glm::vec2 T = glm::make_vec2(t);
+    
+    glm::vec2 xT = T * M * Qx;
+    float Xt = xT[0] + xT[1];
+    
+    glm::vec2 yT = T * M * Qy;
+    float Yt = yT[0] + yT[1];
+    
+    glm::vec2 zT = T * M * Qz;
+    float Zt = zT[0] + zT[1];
+    
+    glm::vec2 wT = T * M * Qw;
+    float Wt = wT[0] + wT[1];
+    
+    float normalBase = sqrt(Xt * Xt + Yt * Yt + Zt * Zt + Wt * Wt);
+    
+    float normalXt = Xt / normalBase;
+    float normalYt = Yt / normalBase;
+    float normalZt = Zt / normalBase;
+    float normalWt = Wt / normalBase;
+    
+    float QuaRotate[9] =
+    {
+        1 - 2 * normalYt * normalYt - 2 * normalZt * normalZt,
+        2 * normalXt * normalYt + 2 * normalZt * normalWt,
+        2 * normalXt * normalZt - 2 * normalYt * normalWt,
+        2 * normalXt * normalYt - 2 * normalZt * normalWt,
+        1 - 2 * normalXt * normalXt,
+        2 * normalYt * normalZt + 2 * normalXt * normalWt,
+        2 * normalXt * normalZt + 2 * normalYt * normalWt,
+        2 * normalYt * normalZt - 2 * normalXt * normalWt,
+        1 - 2 * normalXt * normalXt - 2 * normalYt * normalYt
+    };
+    
+    glm::mat3 rotate = glm::make_mat3(QuaRotate);
+    glm::mat4 transform(rotate);
+    transform[3][3] = 1.0f;
+    
+    
+}
