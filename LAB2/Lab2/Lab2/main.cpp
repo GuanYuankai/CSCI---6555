@@ -19,6 +19,7 @@ using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+glm::mat4 interpulate(float Qua1[4], float Qua2[4], float time);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
@@ -58,8 +59,9 @@ int main()
         j++;
         
     }
-    
-    glm::mat4 body = glm::mat4(1.0f);
+    float Qua1[4] = {0.3826834, 0, 0, 0.9238795};
+    float Qua2[4] = {-0.3826834, 0, 0, 0.9238795};
+
     
 
 
@@ -171,12 +173,17 @@ int main()
 
         ourShader.use();
         float time1 = glfwGetTime();
-        float t = fmod(time1, 3);
+        float t = fmod(time1, 1);
         glm::mat4 body = glm::mat4(1.0f);
-        body = glm::translate(body,glm::vec3(0.0f, 0.0f, 0.0f + t ));
+        body = glm::translate(body,glm::vec3(0.0f, 0.0f, -1.0f + t ));
         
+        float legTime = t;
+        glm::mat4 legLeftRotation = interpulate(Qua1, Qua2, legTime);
         glm::mat4 legLeft = glm::mat4(1.0f);
-        legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, 0.0f));
+        legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, -0.05f));
+//        legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, 0.0f));
+        legLeft = legLeftRotation * legLeft;
+        legLeft = glm::translate(legLeft, glm::vec3(0.0f, 0.0f, 0.05f));
         legLeft = body * legLeft;
         
         glm::mat4 legRight = glm::mat4(1.0f);
@@ -234,7 +241,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void interpulate(float Qua1[4], float Qua2[4], float time )
+glm::mat4 interpulate(float Qua1[4], float Qua2[4], float time)
 {
     float quaX[2] = {Qua1[0], Qua2[0]};
     float quaY[2] = {Qua1[1], Qua2[1]};
@@ -288,6 +295,7 @@ void interpulate(float Qua1[4], float Qua2[4], float time )
     glm::mat3 rotate = glm::make_mat3(QuaRotate);
     glm::mat4 transform(rotate);
     transform[3][3] = 1.0f;
+
     
-    
+    return transform;
 }
