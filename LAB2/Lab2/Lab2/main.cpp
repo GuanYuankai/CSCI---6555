@@ -175,7 +175,7 @@ int main()
         float time1 = glfwGetTime();
         float t = fmod(time1, 3);
         glm::mat4 body = glm::mat4(1.0f);
-        body = glm::translate(body,glm::vec3(0.0f, 0.0f, 0.0f  ));
+        body = glm::translate(body,glm::vec3(0.0f, 0.0f, 0.0f + t ));
 
         int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
         glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
