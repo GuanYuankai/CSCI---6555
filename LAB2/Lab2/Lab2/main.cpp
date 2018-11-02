@@ -191,27 +191,56 @@ int main()
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         legTime = legTime + 0.01f;
-        while(legTime > 1){ legTime = 0;}
-        
         glm::mat4 legLeft = glm::mat4(1.0f);
+        float legTime2 = 0;
+        float legTime3 = 0;
+        if(legTime > 2){legTime = 0;}
+        if(legTime < 1){
         glm::mat4 legLeftRotation = interpulate(Qua1, Qua2, legTime);
         legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, -0.05f));
 //        legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, 0.0f));
         legLeft = legLeftRotation * legLeft;
         legLeft = glm::translate(legLeft, glm::vec3(0.0f, 0.0f, 0.05f));
         legLeft = body * legLeft;
-        
+        }
+        if(legTime > 1 && legTime < 2){
+            legTime2 = legTime -1;
+            glm::mat4 legLeftRotation = interpulate(Qua2, Qua1, legTime2);
+            legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, -0.05f));
+            //        legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, 0.0f));
+            legLeft = legLeftRotation * legLeft;
+            legLeft = glm::translate(legLeft, glm::vec3(0.0f, 0.0f, 0.05f));
+            legLeft = body * legLeft;
+        }
         
 
+        
+        
         glBindVertexArray(VAO2);
 
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legLeft));
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
-        glm::mat4 legRight = glm::mat4(1.0f);
-        legRight = glm::translate(legRight, glm::vec3(0.1f, -0.5f, 0.0f));
-        legRight = body * legRight;
-    
         
+        
+        
+        glm::mat4 legRight = glm::mat4(1.0f);
+        if(legTime < 1){
+            glm::mat4 legRightRotation = interpulate(Qua2, Qua1, legTime);
+            legRight = glm::translate(legRight, glm::vec3(0.0f, -0.5f, -0.05f));
+            legRight = legRightRotation * legRight;
+            legRight = glm::translate(legRight, glm::vec3(0.1f, 0.0f, 0.05f));
+            legRight = body * legRight;
+            
+        }
+        if(legTime > 1 && legTime < 2){
+            legTime3 = legTime -1;
+            glm::mat4 legRightRotation = interpulate(Qua1, Qua2, legTime3);
+            legRight = glm::translate(legRight, glm::vec3(0.0f, -0.5f, -0.05f));
+            legRight = legRightRotation * legRight;
+            legRight = glm::translate(legRight, glm::vec3(0.1f, 0.0f, 0.05f));
+            legRight = body * legRight;
+            
+        }
         
         glBindVertexArray(VAO3);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legRight));
