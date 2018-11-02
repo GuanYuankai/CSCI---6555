@@ -160,12 +160,20 @@ int main()
     projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 100.0f);
 
     float currentPlace = -5.0f;
+    float legTime = 0;
+    
     while (!glfwWindowShouldClose(window))
     {
         
 
 
         processInput(window);
+        int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
+        glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        int projLoc = glad_glGetUniformLocation(ourShader.ID, "projection");
+        glad_glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        int transLoc = glad_glGetUniformLocation(ourShader.ID, "trans");
+        
         
         
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -174,39 +182,36 @@ int main()
         ourShader.use();
         float time1 = glfwGetTime();
         float t = fmod(time1, 1);
+
         glm::mat4 body = glm::mat4(1.0f);
         currentPlace = currentPlace + 0.01f;
         body = glm::translate(body,glm::vec3(0.0f, 0.0f, currentPlace ));
+        glBindVertexArray(VAO);
+        glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
+        glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
-        float legTime = t;
-        glm::mat4 legLeftRotation = interpulate(Qua1, Qua2, legTime);
+        legTime = legTime + 0.01f;
+        while(legTime > 1){ legTime = 0;}
+        
         glm::mat4 legLeft = glm::mat4(1.0f);
+        glm::mat4 legLeftRotation = interpulate(Qua1, Qua2, legTime);
         legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, -0.05f));
 //        legLeft = glm::translate(legLeft, glm::vec3(-0.1f, -0.5f, 0.0f));
         legLeft = legLeftRotation * legLeft;
         legLeft = glm::translate(legLeft, glm::vec3(0.0f, 0.0f, 0.05f));
         legLeft = body * legLeft;
         
-        glm::mat4 legRight = glm::mat4(1.0f);
-        legRight = glm::translate(legRight, glm::vec3(0.1f, -0.5f, 0.0f));
-        legRight = body * legRight;
-
-        int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
-        glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-        int projLoc = glad_glGetUniformLocation(ourShader.ID, "projection");
-        glad_glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-        int transLoc = glad_glGetUniformLocation(ourShader.ID, "trans");
- 
-
- 
-        glBindVertexArray(VAO);
-        glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
-        glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
         
+
         glBindVertexArray(VAO2);
 
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legLeft));
         glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
+        glm::mat4 legRight = glm::mat4(1.0f);
+        legRight = glm::translate(legRight, glm::vec3(0.1f, -0.5f, 0.0f));
+        legRight = body * legRight;
+    
+        
         
         glBindVertexArray(VAO3);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legRight));
