@@ -159,7 +159,7 @@ int main()
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 100.0f);
 
-    
+    float currentPlace = -5.0f;
     while (!glfwWindowShouldClose(window))
     {
         
@@ -175,7 +175,8 @@ int main()
         float time1 = glfwGetTime();
         float t = fmod(time1, 1);
         glm::mat4 body = glm::mat4(1.0f);
-        body = glm::translate(body,glm::vec3(0.0f, 0.0f, -1.0f + t ));
+        currentPlace = currentPlace + 0.01f;
+        body = glm::translate(body,glm::vec3(0.0f, 0.0f, currentPlace ));
         
         float legTime = t;
         glm::mat4 legLeftRotation = interpulate(Qua1, Qua2, legTime);
