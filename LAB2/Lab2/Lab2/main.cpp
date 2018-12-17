@@ -13,8 +13,9 @@
 #include <glm/ext.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
-#include "shader.h"
 
+#include "shader.h"
+#include "LoadModel.h"
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -23,42 +24,12 @@ glm::mat4 interpulate(float Qua1[4], float Qua2[4], float time);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+
 int main()
 {
-    //read model from file
-    ifstream myfile("body.off");
-    if(!myfile)
-    {
-        cout << "Fail to Open File" << endl;
-    }
-    
-    int numberVertex, numberIndice, zero, flag;
-    int i = 0;
-    int j = 0;
-    double indiceData1, indiceData2, indiceData3;
-    myfile >> numberVertex >> numberIndice >> zero;
-    float vertex[numberVertex * 3];
-    int indice[numberIndice * 4];
-    //load vertex parameter and indice parameter
-    for(i = 0; i < numberVertex * 3; i++)
-    {
-        myfile >> vertex[i];
-    }
-    
-    
-    
-    for(i = 0; i < numberIndice * 4; i += 4)
-    {
-        //can use flag to decide what type the indice is
-        myfile >> flag >> indiceData1 >> indiceData2 >> indiceData3;
-        indice[j] = indiceData1;
-        j++;
-        indice[j] = indiceData2;
-        j++;
-        indice[j] = indiceData3;
-        j++;
-        
-    }
+
+    string off = "body.off";
+    Model model = LoadModel(off);
     float Qua1[4] = {0.3826834, 0, 0, 0.9238795};
     float Qua2[4] = {-0.3826834, 0, 0, 0.9238795};
 
@@ -107,9 +78,9 @@ int main()
     
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, numberVertex * 3 * 4, vertex, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, model.numberVertex * 3 * 4, model.vertex, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numberIndice * 3 * 4, indice, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.numberIndice * 3 * 4, model.indice, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -123,10 +94,10 @@ int main()
     glBindVertexArray(VAO2);
     
     glBindBuffer(GL_ARRAY_BUFFER, VBO2);
-    glBufferData(GL_ARRAY_BUFFER, numberVertex * 3 * 4, vertex, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, model.numberVertex * 3 * 4, model.vertex, GL_STATIC_DRAW);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO2);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numberIndice * 3 * 4, indice, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.numberIndice * 3 * 4, model.indice, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -140,10 +111,10 @@ int main()
     glBindVertexArray(VAO3);
     
     glBindBuffer(GL_ARRAY_BUFFER, VBO3);
-    glBufferData(GL_ARRAY_BUFFER, numberVertex * 3 * 4, vertex, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, model.numberVertex * 3 * 4, model.vertex, GL_STATIC_DRAW);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO3);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numberIndice * 3 * 4, indice, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.numberIndice * 3 * 4, model.indice, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -188,7 +159,7 @@ int main()
         body = glm::translate(body,glm::vec3(0.0f, 0.0f, currentPlace ));
         glBindVertexArray(VAO);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
-        glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, model.numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         legTime = legTime + 0.01f;
         glm::mat4 legLeft = glm::mat4(1.0f);
@@ -219,7 +190,7 @@ int main()
         glBindVertexArray(VAO2);
 
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legLeft));
-        glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, model.numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         
         
@@ -244,7 +215,7 @@ int main()
         
         glBindVertexArray(VAO3);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(legRight));
-        glDrawElements(GL_TRIANGLES, numberIndice * 3, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, model.numberIndice * 3, GL_UNSIGNED_INT, 0);
         
         glfwSwapBuffers(window);
         glfwPollEvents();
