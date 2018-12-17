@@ -3,6 +3,11 @@
 
 #include <iostream>
 
+#include "shader.h"
+#include "LoadModel.h"
+
+using namespace std;
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -12,6 +17,9 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
+    string off = "ball.off";
+    Model model = LoadModel(off);
+    
     
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
