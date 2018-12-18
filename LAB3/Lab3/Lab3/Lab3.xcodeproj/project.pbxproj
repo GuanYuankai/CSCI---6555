@@ -13,6 +13,7 @@
 		AE70056121C8578F00C29C82 /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE70056021C8578F00C29C82 /* libglfw.3.2.dylib */; };
 		AE70056321C857E000C29C82 /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = AE70056221C857E000C29C82 /* glad.c */; };
 		AE70056D21C8652000C29C82 /* LoadModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE70056B21C8652000C29C82 /* LoadModel.cpp */; };
+		AE70057021C86FB100C29C82 /* PhysicalEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE70056E21C86FB100C29C82 /* PhysicalEngine.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,10 @@
 		AE70056A21C8652000C29C82 /* shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vs; sourceTree = "<group>"; };
 		AE70056B21C8652000C29C82 /* LoadModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadModel.cpp; sourceTree = "<group>"; };
 		AE70056C21C8652000C29C82 /* LoadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadModel.h; sourceTree = "<group>"; };
+		AE70056E21C86FB100C29C82 /* PhysicalEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicalEngine.cpp; sourceTree = "<group>"; };
+		AE70056F21C86FB100C29C82 /* PhysicalEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PhysicalEngine.hpp; sourceTree = "<group>"; };
+		AE70057121C8727D00C29C82 /* shader_plane.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_plane.vs; sourceTree = "<group>"; };
+		AE70057221C8757C00C29C82 /* shader_plane.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_plane.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +87,10 @@
 				AE70056A21C8652000C29C82 /* shader.vs */,
 				AE70056221C857E000C29C82 /* glad.c */,
 				AE70055421C8564700C29C82 /* main.cpp */,
+				AE70056E21C86FB100C29C82 /* PhysicalEngine.cpp */,
+				AE70056F21C86FB100C29C82 /* PhysicalEngine.hpp */,
+				AE70057121C8727D00C29C82 /* shader_plane.vs */,
+				AE70057221C8757C00C29C82 /* shader_plane.fs */,
 			);
 			path = Lab3;
 			sourceTree = "<group>";
@@ -154,6 +163,7 @@
 			files = (
 				AE70056D21C8652000C29C82 /* LoadModel.cpp in Sources */,
 				AE70055521C8564700C29C82 /* main.cpp in Sources */,
+				AE70057021C86FB100C29C82 /* PhysicalEngine.cpp in Sources */,
 				AE70056321C857E000C29C82 /* glad.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

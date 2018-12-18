@@ -29,7 +29,8 @@ int main()
     
     string off = "ball.off";
     Model model = LoadModel(off);
-
+    string off_plane = "plane.off";
+    Model model_plane = LoadModel(off_plane);
     
 
     
@@ -62,6 +63,7 @@ int main()
     
     glEnable(GL_DEPTH_TEST);
     Shader ourShader("shader.vs", "shader.fs");
+    Shader ourShader_plane("shader_plane.vs", "shader_plane.fs");
     
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
@@ -78,7 +80,7 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     
- 
+
     
     
     
@@ -111,13 +113,14 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
+        
         ourShader.use();
 
         
         glm::mat4 body = glm::mat4(1.0f);
-        currentPlace = currentPlace
+        currentPlace = currentPlace + 0.05;
         ;
-        body = glm::translate(body,glm::vec3(0.0f, 0.0f, currentPlace ));
+        body = glm::translate(body,glm::vec3(currentPlace, 0.0f, currentPlace ));
         glBindVertexArray(VAO);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
         glDrawElements(GL_TRIANGLES, model.numberIndice * 3, GL_UNSIGNED_INT, 0);
