@@ -14,6 +14,7 @@
 		AE70056321C857E000C29C82 /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = AE70056221C857E000C29C82 /* glad.c */; };
 		AE70056D21C8652000C29C82 /* LoadModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE70056B21C8652000C29C82 /* LoadModel.cpp */; };
 		AE70057021C86FB100C29C82 /* PhysicalEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE70056E21C86FB100C29C82 /* PhysicalEngine.cpp */; };
+		AE70057521C8779500C29C82 /* BindBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE70057321C8779500C29C82 /* BindBuffer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,8 @@
 		AE70056F21C86FB100C29C82 /* PhysicalEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PhysicalEngine.hpp; sourceTree = "<group>"; };
 		AE70057121C8727D00C29C82 /* shader_plane.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_plane.vs; sourceTree = "<group>"; };
 		AE70057221C8757C00C29C82 /* shader_plane.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_plane.fs; sourceTree = "<group>"; };
+		AE70057321C8779500C29C82 /* BindBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BindBuffer.cpp; sourceTree = "<group>"; };
+		AE70057421C8779500C29C82 /* BindBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BindBuffer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +94,8 @@
 				AE70056F21C86FB100C29C82 /* PhysicalEngine.hpp */,
 				AE70057121C8727D00C29C82 /* shader_plane.vs */,
 				AE70057221C8757C00C29C82 /* shader_plane.fs */,
+				AE70057321C8779500C29C82 /* BindBuffer.cpp */,
+				AE70057421C8779500C29C82 /* BindBuffer.hpp */,
 			);
 			path = Lab3;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE70056D21C8652000C29C82 /* LoadModel.cpp in Sources */,
+				AE70057521C8779500C29C82 /* BindBuffer.cpp in Sources */,
 				AE70055521C8564700C29C82 /* main.cpp in Sources */,
 				AE70057021C86FB100C29C82 /* PhysicalEngine.cpp in Sources */,
 				AE70056321C857E000C29C82 /* glad.c in Sources */,

@@ -16,6 +16,9 @@
 
 #include "shader.h"
 #include "LoadModel.h"
+#include "BindBuffer.hpp"
+
+
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -28,9 +31,9 @@ int main()
 {
     
     string off = "ball.off";
-    Model model = LoadModel(off);
+    Model ball = LoadModel(off);
     string off_plane = "plane.off";
-    Model model_plane = LoadModel(off_plane);
+    Model plane = LoadModel(off_plane);
     
 
     
@@ -64,23 +67,10 @@ int main()
     glEnable(GL_DEPTH_TEST);
     Shader ourShader("shader.vs", "shader.fs");
     Shader ourShader_plane("shader_plane.vs", "shader_plane.fs");
-    
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-    
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, model.numberVertex * 3 * 4, model.vertex, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.numberIndice * 3 * 4, model.indice, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    
 
+    BufferObj  ball_buffer;
+    ball_buffer = BindBuffer(ball);
+    
     
     
     
@@ -118,12 +108,12 @@ int main()
 
         
         glm::mat4 body = glm::mat4(1.0f);
-        currentPlace = currentPlace + 0.05;
+        currentPlace = currentPlace ;
         ;
         body = glm::translate(body,glm::vec3(currentPlace, 0.0f, currentPlace ));
-        glBindVertexArray(VAO);
+        glBindVertexArray(ball_buffer.VAO);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
-        glDrawElements(GL_TRIANGLES, model.numberIndice * 3, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, ball.numberIndice * 3, GL_UNSIGNED_INT, 0);
         
 
         
@@ -135,9 +125,9 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    glDeleteVertexArrays(1, &ball_buffer.VAO);
+    glDeleteBuffers(1, &ball_buffer.VBO);
+    glDeleteBuffers(1, &ball_buffer.EBO);
 
     
     glfwTerminate();
