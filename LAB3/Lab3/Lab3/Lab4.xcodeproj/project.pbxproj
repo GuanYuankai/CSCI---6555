@@ -30,7 +30,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AE70055121C8564700C29C82 /* Lab3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lab3; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE70055121C8564700C29C82 /* Lab4 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lab4; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE70055421C8564700C29C82 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AE70055C21C8570900C29C82 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		AE70055E21C8577E00C29C82 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../../../usr/local/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 		AE70054821C8564700C29C82 = {
 			isa = PBXGroup;
 			children = (
-				AE70055321C8564700C29C82 /* Lab3 */,
+				AE70055321C8564700C29C82 /* Lab4 */,
 				AE70055221C8564700C29C82 /* Products */,
 				AE70055B21C8570900C29C82 /* Frameworks */,
 			);
@@ -75,12 +75,12 @@
 		AE70055221C8564700C29C82 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AE70055121C8564700C29C82 /* Lab3 */,
+				AE70055121C8564700C29C82 /* Lab4 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AE70055321C8564700C29C82 /* Lab3 */ = {
+		AE70055321C8564700C29C82 /* Lab4 */ = {
 			isa = PBXGroup;
 			children = (
 				AE70056B21C8652000C29C82 /* LoadModel.cpp */,
@@ -97,7 +97,7 @@
 				AE70057321C8779500C29C82 /* BindBuffer.cpp */,
 				AE70057421C8779500C29C82 /* BindBuffer.hpp */,
 			);
-			path = Lab3;
+			path = Lab4;
 			sourceTree = "<group>";
 		};
 		AE70055B21C8570900C29C82 /* Frameworks */ = {
@@ -113,9 +113,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AE70055021C8564700C29C82 /* Lab3 */ = {
+		AE70055021C8564700C29C82 /* Lab4 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AE70055821C8564700C29C82 /* Build configuration list for PBXNativeTarget "Lab3" */;
+			buildConfigurationList = AE70055821C8564700C29C82 /* Build configuration list for PBXNativeTarget "Lab4" */;
 			buildPhases = (
 				AE70054D21C8564700C29C82 /* Sources */,
 				AE70054E21C8564700C29C82 /* Frameworks */,
@@ -125,9 +125,9 @@
 			);
 			dependencies = (
 			);
-			name = Lab3;
+			name = Lab4;
 			productName = Lab3;
-			productReference = AE70055121C8564700C29C82 /* Lab3 */;
+			productReference = AE70055121C8564700C29C82 /* Lab4 */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -144,7 +144,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AE70054C21C8564700C29C82 /* Build configuration list for PBXProject "Lab3" */;
+			buildConfigurationList = AE70054C21C8564700C29C82 /* Build configuration list for PBXProject "Lab4" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -156,7 +156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AE70055021C8564700C29C82 /* Lab3 */,
+				AE70055021C8564700C29C82 /* Lab4 */,
 			);
 		};
 /* End PBXProject section */
@@ -313,7 +313,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AE70054C21C8564700C29C82 /* Build configuration list for PBXProject "Lab3" */ = {
+		AE70054C21C8564700C29C82 /* Build configuration list for PBXProject "Lab4" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE70055621C8564700C29C82 /* Debug */,
@@ -322,7 +322,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AE70055821C8564700C29C82 /* Build configuration list for PBXNativeTarget "Lab3" */ = {
+		AE70055821C8564700C29C82 /* Build configuration list for PBXNativeTarget "Lab4" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE70055921C8564700C29C82 /* Debug */,
