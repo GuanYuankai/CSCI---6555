@@ -17,14 +17,57 @@
 
 Model Accelerate(Model model, glm::vec3 accelerate,float time)
 {
-    float gravity = -10.0f;
-    model.velocity = glm::vec3(accelerate * time);
+    float gravity = 1.0f;
+    model.velocity = model.velocity + glm::vec3(accelerate * time);
     model.velocity.y = model.velocity.y - gravity * time;
     return model;
 }
 
 Model Velocity(Model model, float time)
 {
-    model.distance = glm::vec3(model.velocity * time);
+    model.position =  model.position + model.velocity * time;
     return model;
+}
+
+Model Boundarybounce(Model model)
+{
+    if(model.position.y <= 1)
+    {
+        model.velocity.y = - model.velocity.y;
+    }
+    
+    if((model.position.x) <= -24 || (model.position.x) >= 24)
+    {
+        model.velocity.x = -model.velocity.x;
+        
+    }
+    
+    if((model.position.z) <= -24 || (model.position.z) >= 24)
+    {
+        model.velocity.z = -model.velocity.z;
+        
+    }
+    return model;
+
+    
+}
+
+void Collision(Model &model1, Model &model2)
+{
+    glm::vec3 Temporal = glm::vec3(1.0f);
+    if(glm::distance(model1.position, model2.position) <= 1)
+    {
+        if((model1.position.x - model2.position.x <= 1) || (model2.position.x - model1.position.x <= 1))
+        {
+            Temporal.x = model1.position.x;
+            model1.position.x = model2.position.x;
+            model2.position.x = Temporal.x;
+        }
+        if((model1.position.z - model2.position.z <= 1) || (model2.position.z - model1.position.z <= 1))
+        {
+            Temporal.z = model1.position.z;
+            model1.position.z = model2.position.z;
+            model2.position.z = Temporal.z;
+        }
+    }
 }

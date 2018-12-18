@@ -128,7 +128,7 @@ int main()
                        glm::vec3(0.0f, 1.0f, 0.0f));
 
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, -25.0f, 100.0f);
 
     float currentPlace = -5.0f;
     float legTime = 0;

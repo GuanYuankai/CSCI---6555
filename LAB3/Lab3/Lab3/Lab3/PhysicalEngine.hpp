@@ -19,8 +19,12 @@
 
 #include "LoadModel.h"
 
-Model Accelerate(Model model, float time);
+Model Accelerate(Model model, glm::vec3 accelerate,float time);
 Model Velocity(Model model, float time);
+
+Model Boundarybounce(Model model);
+
+void Collision(Model &model1, Model &model2);
 
 
 #endif /* PhysicalEngine_hpp */

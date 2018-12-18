@@ -25,7 +25,7 @@ public:
     float *vertex;
     int *indice;
     glm::vec3 velocity;
-    glm::vec3 distance;
+    glm::vec3 position;
     
 };
 
