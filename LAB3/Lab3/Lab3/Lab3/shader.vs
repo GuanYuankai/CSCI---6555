@@ -9,7 +9,7 @@ out vec3 color;
 
 void main()
 {
-    gl_Position = projection * view * trans * vec4(aPos / 5 , 1.0) ;
+    gl_Position = projection * view * trans * vec4(aPos  , 1.0) ;
 
     color = aPos;
 }

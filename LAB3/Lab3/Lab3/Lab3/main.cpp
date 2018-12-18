@@ -66,17 +66,20 @@ int main()
     
     glEnable(GL_DEPTH_TEST);
     Shader ourShader("shader.vs", "shader.fs");
-    Shader ourShader_plane("shader_plane.vs", "shader_plane.fs");
+    Shader ourShader_Plane("shader_plane.vs", "shader_plane.fs");
 
     BufferObj  ball_buffer;
     ball_buffer = BindBuffer(ball);
     
+    BufferObj plane_buffer;
+    plane_buffer = BindBuffer(plane);
     
     
     
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    
+
     glm::mat4 view = glm::mat4(1.0f);
-    view = glm::lookAt(glm::vec3(3.0f, 3.0f, 3.0f),
+    view = glm::lookAt(glm::vec3(10.0f, 5.0f, 10.0f),
                        glm::vec3(0.0f, 0.0f, 0.0f),
                        glm::vec3(0.0f, 1.0f, 0.0f));
     
@@ -92,39 +95,49 @@ int main()
         
         
         processInput(window);
+        ourShader.use();
         int viewLoc = glad_glGetUniformLocation(ourShader.ID, "view");
         glad_glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         int projLoc = glad_glGetUniformLocation(ourShader.ID, "projection");
         glad_glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         int transLoc = glad_glGetUniformLocation(ourShader.ID, "trans");
         
-        
+        ourShader_Plane.use();
+        int viewLoc_Plane = glad_glGetUniformLocation(ourShader_Plane.ID, "view");
+        glad_glUniformMatrix4fv(viewLoc_Plane, 1, GL_FALSE, glm::value_ptr(view));
+        int projLoc_Plane = glad_glGetUniformLocation(ourShader_Plane.ID, "projection");
+        glad_glUniformMatrix4fv(projLoc_Plane, 1, GL_FALSE, glm::value_ptr(projection));
+        int transLoc_Plane = glad_glGetUniformLocation(ourShader_Plane.ID, "trans");
         
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        
-        ourShader.use();
 
+        ourShader.use();
         
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glm::mat4 body = glm::mat4(1.0f);
-        currentPlace = currentPlace ;
-        ;
-        body = glm::translate(body,glm::vec3(currentPlace, 0.0f, currentPlace ));
+        currentPlace = currentPlace + 0.05f ;
+        body = glm::translate(body,glm::vec3(currentPlace, 1.0f, currentPlace ));
         glBindVertexArray(ball_buffer.VAO);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(body));
         glDrawElements(GL_TRIANGLES, ball.numberIndice * 3, GL_UNSIGNED_INT, 0);
         
-
+        ourShader_Plane.use();
         
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glm::mat4 plane_tranc = glm::mat4(1.0f);
+        glBindVertexArray(plane_buffer.VAO);
+        glad_glUniformMatrix4fv(transLoc_Plane, 1, GL_FALSE, glm::value_ptr(plane_tranc));
+        glDrawElements(GL_TRIANGLES, plane.numberIndice * 3, GL_UNSIGNED_INT, 0);
         
-        
-        
-
         
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+    glDeleteVertexArrays(1, &plane_buffer.VAO);
+    glDeleteBuffers(1, &plane_buffer.VBO);
+    glDeleteBuffers(1, &plane_buffer.EBO);
+    
     glDeleteVertexArrays(1, &ball_buffer.VAO);
     glDeleteBuffers(1, &ball_buffer.VBO);
     glDeleteBuffers(1, &ball_buffer.EBO);

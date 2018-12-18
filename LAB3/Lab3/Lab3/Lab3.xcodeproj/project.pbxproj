@@ -43,10 +43,10 @@
 		AE70056C21C8652000C29C82 /* LoadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadModel.h; sourceTree = "<group>"; };
 		AE70056E21C86FB100C29C82 /* PhysicalEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicalEngine.cpp; sourceTree = "<group>"; };
 		AE70056F21C86FB100C29C82 /* PhysicalEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PhysicalEngine.hpp; sourceTree = "<group>"; };
-		AE70057121C8727D00C29C82 /* shader_plane.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_plane.vs; sourceTree = "<group>"; };
 		AE70057221C8757C00C29C82 /* shader_plane.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_plane.fs; sourceTree = "<group>"; };
 		AE70057321C8779500C29C82 /* BindBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BindBuffer.cpp; sourceTree = "<group>"; };
 		AE70057421C8779500C29C82 /* BindBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BindBuffer.hpp; sourceTree = "<group>"; };
+		AE70057621C87DE900C29C82 /* shader_plane.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shader_plane.vs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +92,8 @@
 				AE70055421C8564700C29C82 /* main.cpp */,
 				AE70056E21C86FB100C29C82 /* PhysicalEngine.cpp */,
 				AE70056F21C86FB100C29C82 /* PhysicalEngine.hpp */,
-				AE70057121C8727D00C29C82 /* shader_plane.vs */,
 				AE70057221C8757C00C29C82 /* shader_plane.fs */,
+				AE70057621C87DE900C29C82 /* shader_plane.vs */,
 				AE70057321C8779500C29C82 /* BindBuffer.cpp */,
 				AE70057421C8779500C29C82 /* BindBuffer.hpp */,
 			);
