@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE19FBAF21C9B69A00D34C2F /* Behavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE19FBAD21C9B69A00D34C2F /* Behavior.cpp */; };
 		AE70055521C8564700C29C82 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE70055421C8564700C29C82 /* main.cpp */; };
 		AE70055D21C8570900C29C82 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE70055C21C8570900C29C82 /* OpenGL.framework */; };
 		AE70055F21C8577E00C29C82 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE70055E21C8577E00C29C82 /* libGLEW.2.1.0.dylib */; };
@@ -30,6 +31,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AE19FBAD21C9B69A00D34C2F /* Behavior.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Behavior.cpp; sourceTree = "<group>"; };
+		AE19FBAE21C9B69A00D34C2F /* Behavior.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Behavior.hpp; sourceTree = "<group>"; };
+		AE19FBB021C9C0FF00D34C2F /* cube.off */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.off; sourceTree = "<group>"; };
 		AE70055121C8564700C29C82 /* Lab4 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lab4; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE70055421C8564700C29C82 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AE70055C21C8570900C29C82 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -83,6 +87,7 @@
 		AE70055321C8564700C29C82 /* Lab4 */ = {
 			isa = PBXGroup;
 			children = (
+				AE19FBB021C9C0FF00D34C2F /* cube.off */,
 				AE70056B21C8652000C29C82 /* LoadModel.cpp */,
 				AE70056C21C8652000C29C82 /* LoadModel.h */,
 				AE70056821C8652000C29C82 /* shader.fs */,
@@ -96,6 +101,8 @@
 				AE70057621C87DE900C29C82 /* shader_plane.vs */,
 				AE70057321C8779500C29C82 /* BindBuffer.cpp */,
 				AE70057421C8779500C29C82 /* BindBuffer.hpp */,
+				AE19FBAD21C9B69A00D34C2F /* Behavior.cpp */,
+				AE19FBAE21C9B69A00D34C2F /* Behavior.hpp */,
 			);
 			path = Lab4;
 			sourceTree = "<group>";
@@ -167,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE70056D21C8652000C29C82 /* LoadModel.cpp in Sources */,
+				AE19FBAF21C9B69A00D34C2F /* Behavior.cpp in Sources */,
 				AE70057521C8779500C29C82 /* BindBuffer.cpp in Sources */,
 				AE70055521C8564700C29C82 /* main.cpp in Sources */,
 				AE70057021C86FB100C29C82 /* PhysicalEngine.cpp in Sources */,

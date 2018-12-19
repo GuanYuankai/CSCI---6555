@@ -17,9 +17,9 @@
 
 Model Accelerate(Model model, glm::vec3 accelerate,float time)
 {
-    float gravity = 1.0f;
+//    float gravity = 1.0f;
     model.velocity = model.velocity + glm::vec3(accelerate * time);
-    model.velocity.y = model.velocity.y - gravity * time;
+//    model.velocity.y = model.velocity.y - gravity * time; //gravity system
     return model;
 }
 
@@ -35,6 +35,11 @@ Model Boundarybounce(Model model)
     {
         model.velocity.y = - model.velocity.y;
     }
+    if(model.position.y >= 30)
+    {
+        model.velocity.y = - model.velocity.y;
+    }
+    
     
     if((model.position.x) <= -24 || (model.position.x) >= 24)
     {

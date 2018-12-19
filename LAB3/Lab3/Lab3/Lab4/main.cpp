@@ -18,6 +18,7 @@
 #include "LoadModel.h"
 #include "BindBuffer.hpp"
 #include "PhysicalEngine.hpp"
+#include "Behavior.hpp"
 
 
 using namespace std;
@@ -27,9 +28,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-float lookat_Y = 20.0f;
-float lookat_X = 40.0f;
-float lookat_Z = 40.0f;
+float lookat_Y = 50.0f;
+float lookat_X = 50.0f;
+float lookat_Z = 50.0f;
 
 
 int main()
@@ -39,9 +40,11 @@ int main()
     Model ball1 = LoadModel(off);
     Model ball2 = LoadModel(off);
     Model ball3 = LoadModel(off);
+    Model ball4 = LoadModel(off);
     string off_plane = "plane.off";
     Model plane = LoadModel(off_plane);
-    
+    string off_cube = "cube.off";
+    Model cube = LoadModel(off_cube);
 
     
     glfwInit();
@@ -84,8 +87,14 @@ int main()
     BufferObj ball3_buffer;
     ball3_buffer = BindBuffer(ball3);
     
+    BufferObj ball4_buffer;
+    ball4_buffer = BindBuffer(ball4);
+    
     BufferObj plane_buffer;
     plane_buffer = BindBuffer(plane);
+    
+    BufferObj cube_buffer;
+    cube_buffer = BindBuffer(cube);
     
     
     
@@ -97,17 +106,25 @@ int main()
                        glm::vec3(0.0f, 1.0f, 0.0f));
     
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 1000.0f);
     
     
 
     ball1.velocity = glm::vec3(5.0f, 0.0f, 3.0f);
     ball2.velocity = glm::vec3(-5.0f, 0.0f, 3.0f);
     ball3.velocity = glm::vec3(0.0f, 0.0f, 10.0f);
+    ball4.velocity = glm::vec3(3.0f, 6.0f, 10.0f);
+    
+    cube.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+    
     glm::mat4 trans = glm::mat4(1.0f);
-    ball1.position= glm::vec3(-10.0f, 5.0f, 5.0f);
-    ball2.position= glm::vec3(10.0f,5.0f, 5.0f);
-    ball3.position= glm::vec3(3.0f,5.0f, 5.0f);
+    ball1.position = glm::vec3(-10.0f, 5.0f, 5.0f);
+    ball2.position = glm::vec3(10.0f,5.0f, 5.0f);
+    ball3.position = glm::vec3(3.0f,15.0f, 5.0f);
+    ball4.position = glm::vec3(0.0f,2.0f, 5.0f);
+    
+    cube.position = glm::vec3(0.0f, 0.0f, 25.0f);
+    
     glfwSetKeyCallback(window, key_callback);
     
     while (!glfwWindowShouldClose(window))
@@ -143,13 +160,17 @@ int main()
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-
-
- 
-        glm::vec3 accelerate = glm::vec3(0.0f);
         float time = 0.02f;
+        Flock(ball1, ball2, time);
+        Flock(ball2, ball3, time);
+        Flock(ball1, ball3, time);
+        Flock(ball1, ball4, time);
+        Flock(ball2, ball4, time);
+        Flock(ball3, ball4, time);
+ 
+
+
         
-        ball1 = Accelerate(ball1, accelerate, time);
         ball1 = Velocity(ball1, time);
         trans[3] = glm::vec4(ball1.position, 1.0f);
         glBindVertexArray(ball1_buffer.VAO);
@@ -158,7 +179,7 @@ int main()
         ball1 = Boundarybounce(ball1);
         
 
-        ball2 = Accelerate(ball2, accelerate, time);
+
         ball2 = Velocity(ball2, time);
         trans[3] = glm::vec4(ball2.position, 1.0f);
         glBindVertexArray(ball2_buffer.VAO);
@@ -166,18 +187,30 @@ int main()
         glDrawElements(GL_TRIANGLES, ball2.numberIndice * 3, GL_UNSIGNED_INT, 0);
         ball2 = Boundarybounce(ball2);
         
-        ball3 = Accelerate(ball3, accelerate, time);
+ 
         ball3 = Velocity(ball3, time);
         trans[3] = glm::vec4(ball3.position, 1.0f);
         glBindVertexArray(ball3_buffer.VAO);
         glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(trans));
-        glDrawElements(GL_TRIANGLES, ball2.numberIndice * 3, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, ball3.numberIndice * 3, GL_UNSIGNED_INT, 0);
         ball3 = Boundarybounce(ball3);
+        
+        ball4 = Velocity(ball4, time);
+        trans[3] = glm::vec4(ball4.position, 1.0f);
+        glBindVertexArray(ball4_buffer.VAO);
+        glad_glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(trans));
+        glDrawElements(GL_TRIANGLES, ball4.numberIndice * 3, GL_UNSIGNED_INT, 0);
+        ball4 = Boundarybounce(ball4);
 
         
         Collision(ball1, ball2);
         Collision(ball1, ball3);
         Collision(ball3, ball2);
+        Collision(ball1, ball4);
+        Collision(ball2, ball4);
+        Collision(ball3, ball4);
+        
+
         
         ourShader_Plane.use();
         
@@ -187,8 +220,13 @@ int main()
         glad_glUniformMatrix4fv(transLoc_Plane, 1, GL_FALSE, glm::value_ptr(plane_tranc));
         glDrawElements(GL_TRIANGLES, plane.numberIndice * 3, GL_UNSIGNED_INT, 0);
         
-        cout << "position:" << glm::to_string(ball1.position) << endl;
-        
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+//        glm::mat4 cube_tranc = glm::mat4(1.0f);
+//        glBindVertexArray(cube_buffer.VAO);
+//        glad_glUniformMatrix4fv(transLoc_Plane, 1, GL_FALSE, glm::value_ptr(cube_tranc));
+//        glDrawElements(GL_TRIANGLES, cube.numberIndice * 3, GL_UNSIGNED_INT, 0);
+//
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -207,6 +245,10 @@ int main()
     glDeleteVertexArrays(1, &ball3_buffer.VAO);
     glDeleteBuffers(1, &ball3_buffer.VBO);
     glDeleteBuffers(1, &ball3_buffer.EBO);
+    
+    glDeleteVertexArrays(1, &ball4_buffer.VAO);
+    glDeleteBuffers(1, &ball4_buffer.VBO);
+    glDeleteBuffers(1, &ball4_buffer.EBO);
 
     
     glfwTerminate();
